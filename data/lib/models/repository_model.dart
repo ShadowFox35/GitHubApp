@@ -11,9 +11,9 @@ class RepositoryModel with _$RepositoryModel {
   factory RepositoryModel({
     @Default('') @HiveField(0) String? name,
     @Default(0) @HiveField(1) int? id,
+    @Default(false) @HiveField(2) bool? isFavorite,
   }) = _RepositoryModel;
 
   factory RepositoryModel.fromJson(Map<String, dynamic> json) =>
       _$RepositoryModelFromJson(json);
 }
-

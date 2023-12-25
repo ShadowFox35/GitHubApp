@@ -1,10 +1,9 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
-import 'package:core/core.dart';
-
 import 'package:main/src/bloc/main_bloc.dart';
-import 'package:main/src/ui/repositories_list.dart';
+import 'package:main/src/ui/main_list.dart';
 import 'package:main/src/ui/search_form.dart';
 
 class MainForm extends StatelessWidget {
@@ -24,10 +23,15 @@ class MainForm extends StatelessWidget {
             child: BlocBuilder<MainBloc, MainState>(
               builder: (context, state) {
                 return IconButton(
-                    color: Theme.of(context).primaryColor,
-                    iconSize: AppDimens.size_45,
-                    icon: SvgPicture.asset(ImagePaths.gofavoriteIcon),
-                    onPressed: () => {null});
+                  color: Theme.of(context).primaryColor,
+                  iconSize: AppDimens.size_45,
+                  icon: SvgPicture.asset(ImagePaths.gofavoriteIcon),
+                  onPressed: () => {
+                    BlocProvider.of<MainBloc>(context).add(
+                      GoFavouriteEvent(),
+                    ),
+                  },
+                );
               },
             ),
           ),
@@ -47,13 +51,14 @@ class MainForm extends StatelessWidget {
                     SearchForm(),
                     Container(
                       padding: const EdgeInsetsDirectional.symmetric(
-                          vertical: AppDimens.padding_15),
+                        vertical: AppDimens.padding_15,
+                      ),
                       child: Text(
                         AppConstants.whatWeFound,
                         style: AppFonts.accent,
                       ),
                     ),
-                    RepositoriesList(state.repositoryList),
+                    MainList(state.repositoryList, state.isFavorite),
                   ],
                 ),
               ),

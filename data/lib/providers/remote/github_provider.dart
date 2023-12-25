@@ -11,11 +11,10 @@ class GitHubProvider {
       queryParameters: {'q': data.name, 'per_page': 15},
     );
 
-    final a = response.data["items"];
     late final List<RepositoryModel> repositories = [];
-    a.forEach((element) {
+    response.data["items"].forEach((element) {
       repositories.add(
-        RepositoryModel(name: element["full_name"]),
+        RepositoryModel(name: element["full_name"], id: element["id"]),
       );
     });
     return repositories;

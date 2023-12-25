@@ -12,9 +12,9 @@ class DataDI {
   }
 
   void _initProviders() {
-    // appLocator.registerLazySingleton<HiveProvider>(
-    //   () => HiveProvider(),
-    // );
+    appLocator.registerLazySingleton<HiveProvider>(
+      () => HiveProvider(),
+    );
     appLocator.registerLazySingleton<GitHubProvider>(
       () => GitHubProvider(dio: Dio()),
     );
@@ -26,12 +26,36 @@ class DataDI {
         githubProvider: appLocator<GitHubProvider>(),
       ),
     );
+
+    appLocator.registerLazySingleton<FavoriteRepository>(
+      () => FavoriteRepositoryImpl(
+        hiveProvider: appLocator<HiveProvider>(),
+      ),
+    );
   }
 
   void _initUseCases() {
     appLocator.registerLazySingleton<SearchRepositoriesUseCase>(
       () => SearchRepositoriesUseCase(
         searchRepository: appLocator<SearchRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<AddFavoriteUseCase>(
+      () => AddFavoriteUseCase(
+        favoriteRepository: appLocator<FavoriteRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<RemoveFavoriteUseCase>(
+      () => RemoveFavoriteUseCase(
+        favoriteRepository: appLocator<FavoriteRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<GetFavoriteUseCase>(
+      () => GetFavoriteUseCase(
+        favoriteRepository: appLocator<FavoriteRepository>(),
       ),
     );
   }

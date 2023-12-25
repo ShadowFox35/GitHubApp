@@ -19,17 +19,20 @@ class RepositoryModelAdapter extends TypeAdapter<RepositoryModel> {
     return RepositoryModel(
       name: fields[0] as String?,
       id: fields[1] as int?,
+      isFavorite: fields[2] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, RepositoryModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(2)
+      ..write(obj.isFavorite);
   }
 
   @override
@@ -52,6 +55,7 @@ _$RepositoryModelImpl _$$RepositoryModelImplFromJson(
     _$RepositoryModelImpl(
       name: json['name'] as String? ?? '',
       id: json['id'] as int? ?? 0,
+      isFavorite: json['isFavorite'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$RepositoryModelImplToJson(
@@ -59,4 +63,5 @@ Map<String, dynamic> _$$RepositoryModelImplToJson(
     <String, dynamic>{
       'name': instance.name,
       'id': instance.id,
+      'isFavorite': instance.isFavorite,
     };

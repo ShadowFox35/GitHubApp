@@ -1,23 +1,29 @@
+import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:main/src/bloc/main_bloc.dart';
 
-class RepositoriesListItem extends StatefulWidget {
+class MainListItem extends StatefulWidget {
   final RepositoryEntity item;
+  final bool isFavorite;
 
-  const RepositoriesListItem({
+  const MainListItem({
     super.key,
     required this.item,
+    required this.isFavorite,
   });
 
   @override
-  State<RepositoriesListItem> createState() => _RepositoriesListItem();
+  State<MainListItem> createState() => _MainListItem();
 }
 
-class _RepositoriesListItem extends State<RepositoriesListItem> {
+class _MainListItem extends State<MainListItem> {
   @override
   Widget build(BuildContext context) {
     final listItem = widget.item;
+    final isFavorite = widget.isFavorite;
+
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Row(
@@ -44,7 +50,21 @@ class _RepositoriesListItem extends State<RepositoriesListItem> {
                         listItem.name,
                         style: AppFonts.title,
                       ),
-                      SvgPicture.asset(ImagePaths.favoriteIcon)
+                      GestureDetector(
+                        onTap: () {
+                          BlocProvider.of<MainBloc>(context).add(
+                            AddToFavouriteEvent(repository: listItem),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          ImagePaths.favoriteIcon,
+                          colorFilter: ColorFilter.mode(
+                              listItem.isFavorite
+                                  ? AppColors.blue
+                                  : AppColors.grey,
+                              BlendMode.srcIn),
+                        ),
+                      ),
                     ],
                   ),
                 ),
