@@ -42,8 +42,9 @@ class MainForm extends StatelessWidget {
           return SafeArea(
             child: Container(
               padding: const EdgeInsets.symmetric(
-                  horizontal: AppDimens.padding_15,
-                  vertical: AppDimens.padding_25),
+                horizontal: AppDimens.padding_15,
+                vertical: AppDimens.padding_25,
+              ),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
