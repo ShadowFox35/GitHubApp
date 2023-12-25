@@ -10,3 +10,7 @@ class RemoveFromFavouriteEvent extends FavoriteEvent {
   final RepositoryEntity repository;
   RemoveFromFavouriteEvent({required this.repository});
 }
+
+class GoMainEvent extends FavoriteEvent {
+  GoMainEvent();
+}

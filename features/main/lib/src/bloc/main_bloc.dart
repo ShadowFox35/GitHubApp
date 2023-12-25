@@ -10,6 +10,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   final SearchRepositoriesUseCase _searchRepositoriesUseCase;
   final AddFavoriteUseCase _addFavoriteUseCase;
   final RemoveFavoriteUseCase _removeFavoriteUseCase;
+  final SaveRepositoriesUseCase _saveRepositoriesUseCase;
+  final GetRepositoriesUseCase _getRepositoriesUseCase;
   final GetFavoriteUseCase _getFavoriteUseCase;
 
   MainBloc({
@@ -17,17 +19,22 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     required SearchRepositoriesUseCase searchRepositoriesUseCase,
     required AddFavoriteUseCase addFavoriteUseCase,
     required RemoveFavoriteUseCase removeFavoriteUseCase,
+    required SaveRepositoriesUseCase saveRepositoriesUseCase,
+    required GetRepositoriesUseCase getRepositoriesUseCase,
     required GetFavoriteUseCase getFavoriteUseCase,
   })  : _appRouter = appRouter,
         _searchRepositoriesUseCase = searchRepositoriesUseCase,
         _addFavoriteUseCase = addFavoriteUseCase,
         _removeFavoriteUseCase = removeFavoriteUseCase,
+        _saveRepositoriesUseCase = saveRepositoriesUseCase,
+        _getRepositoriesUseCase = getRepositoriesUseCase,
         _getFavoriteUseCase = getFavoriteUseCase,
         super(const MainState()) {
     on<InitialEvent>(_getRepositoryList);
     on<SearchEvent>(_onSearchEvent);
     on<AddToFavouriteEvent>(_onAddToFavouriteEvent);
     on<GoFavouriteEvent>(_onGoFavouriteEvent);
+    add(InitialEvent());
   }
 
   Future<void> _getRepositoryList(
@@ -36,22 +43,27 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       emit(
         state.copyWith(isLoading: true, error: null),
       );
-      List<RepositoryEntity> filteredList = [];
-      List<RepositoryEntity> updatedList = [];
-      final List<RepositoryEntity> repositories = state.repositoryList;
-      final List<RepositoryEntity> favorites =
-          await _getFavoriteUseCase.execute(const NoParams());
+      final List<RepositoryEntity> repositoriesFromStorage =
+          await _getRepositoriesUseCase.execute(const NoParams());
 
-      filteredList = repositories.where((repository) {
-        return favorites.any((favorite) => favorite.id == repository.id);
-      }).toList();
+      if (repositoriesFromStorage.isNotEmpty) {
+        final List<RepositoryEntity> favorites =
+            await _getFavoriteUseCase.execute(const NoParams());
 
-      for (var element in updatedList) {
-        filteredList.add(RepositoryEntity(
-            name: element.name, id: element.id, isFavorite: true));
-      }
+        final favoriteIdList = favorites.map((e) => e.id);
+        final List<RepositoryEntity> markedList = [];
 
-      emit(state.copyWith(repositoryList: updatedList, isLoading: false));
+        for (var element in repositoriesFromStorage) {
+          if (favoriteIdList.contains(element.id)) {
+            markedList.add(RepositoryEntity(
+                name: element.name, id: element.id, isFavorite: true));
+          } else {
+            markedList.add(element);
+          }
+        }
+
+        emit(state.copyWith(repositoryList: markedList, isLoading: false));
+      } else {}
     } catch (ex) {
       emit(
         state.copyWith(error: ex, isLoading: false),
@@ -67,6 +79,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       );
       final List<RepositoryEntity> repositories =
           await _searchRepositoriesUseCase.execute(event.request);
+      await _saveRepositoriesUseCase.execute(repositories);
       emit(state.copyWith(repositoryList: repositories, isLoading: false));
     } catch (ex) {
       emit(

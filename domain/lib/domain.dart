@@ -11,3 +11,5 @@ export 'package:domain/usecases/search_reposotories_usecase.dart';
 export 'package:domain/usecases/add_favorite_usecase.dart';
 export 'package:domain/usecases/remove_favorite_usecase.dart';
 export 'package:domain/usecases/get_favorite_usecase.dart';
+export 'package:domain/usecases/save_repositories_usecase.dart';
+export 'package:domain/usecases/get_repositories_usecase.dart';

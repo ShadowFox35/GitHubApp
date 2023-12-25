@@ -9,8 +9,6 @@ class FavoriteForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
@@ -20,7 +18,10 @@ class FavoriteForm extends StatelessWidget {
         leading: IconButton(
           icon: SvgPicture.asset(ImagePaths.backIcon),
           onPressed: () {
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
+            BlocProvider.of<FavoriteBloc>(context).add(
+              GoMainEvent(),
+            );
           },
         ),
       ),

@@ -20,6 +20,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         super(const FavoriteState()) {
     on<InitialEvent>(_getFavoriteList);
     on<RemoveFromFavouriteEvent>(_onRemoveFromFavouriteEvent);
+    on<GoMainEvent>(_onGoMainEvent);
     add(InitialEvent());
   }
 
@@ -58,5 +59,12 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         state.copyWith(error: ex, isLoading: false),
       );
     }
+  }
+
+  Future<void> _onGoMainEvent(
+    GoMainEvent event,
+    Emitter<FavoriteState> emit,
+  ) async {
+    _appRouter.push(const MainRoute());
   }
 }
