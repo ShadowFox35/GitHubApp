@@ -17,9 +17,9 @@ class MainScreen extends StatelessWidget {
         searchRepositoriesUseCase: appLocator<SearchRepositoriesUseCase>(),
         addFavoriteUseCase: appLocator<AddFavoriteUseCase>(),
         removeFavoriteUseCase: appLocator<RemoveFavoriteUseCase>(),
-        getFavoriteUseCase: appLocator<GetFavoriteUseCase>(),
         saveRepositoriesUseCase: appLocator<SaveRepositoriesUseCase>(),
         getRepositoriesUseCase: appLocator<GetRepositoriesUseCase>(),
+        getFavoriteUseCase: appLocator<GetFavoriteUseCase>(),
       ),
       child: BlocBuilder<MainBloc, MainState>(
         builder: (BuildContext context, MainState state) {
