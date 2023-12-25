@@ -4,13 +4,13 @@ import 'package:domain/domain.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
   final GitHubProvider _githubProvider;
-  // final HiveProvider _hiveProvider;
+  final HiveProvider _hiveProvider;
 
   SearchRepositoryImpl({
     required GitHubProvider githubProvider,
-    // required HiveProvider hiveProvider,
-  }) : _githubProvider = githubProvider;
-  // _hiveProvider = hiveProvider;
+    required HiveProvider hiveProvider,
+  })  : _githubProvider = githubProvider,
+        _hiveProvider = hiveProvider;
 
   @override
   Future<List<RepositoryEntity>> findRepositories(
@@ -28,8 +28,16 @@ class SearchRepositoryImpl implements SearchRepository {
   }
 
   @override
-  Stream<List<RepositoryEntity>> observeRepositories() {
-    // TODO: implement observeRepositories
-    throw UnimplementedError();
+  Future<void> saveRepositoriesList(List<RepositoryEntity> list) async {
+    _hiveProvider.saveRepositories(
+        list.map((RepositoryEntity e) => RepositoryMapper.toModel(e)).toList());
+  }
+
+  @override
+  Future<List<RepositoryEntity>> getRepositoriesList() async {
+    final List<RepositoryModel> list = await _hiveProvider.getRepositories();
+    final result =
+        list.map((RepositoryModel e) => RepositoryMapper.toEntity(e)).toList();
+    return result;
   }
 }

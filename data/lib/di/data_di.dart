@@ -24,6 +24,7 @@ class DataDI {
     appLocator.registerLazySingleton<SearchRepository>(
       () => SearchRepositoryImpl(
         githubProvider: appLocator<GitHubProvider>(),
+        hiveProvider: appLocator<HiveProvider>(),
       ),
     );
 
@@ -35,6 +36,18 @@ class DataDI {
   }
 
   void _initUseCases() {
+    appLocator.registerLazySingleton<SaveRepositoriesUseCase>(
+      () => SaveRepositoriesUseCase(
+        searchRepository: appLocator<SearchRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<GetRepositoriesUseCase>(
+      () => GetRepositoriesUseCase(
+        searchRepository: appLocator<SearchRepository>(),
+      ),
+    );
+
     appLocator.registerLazySingleton<SearchRepositoriesUseCase>(
       () => SearchRepositoriesUseCase(
         searchRepository: appLocator<SearchRepository>(),

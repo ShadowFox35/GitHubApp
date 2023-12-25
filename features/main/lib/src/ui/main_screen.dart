@@ -18,6 +18,8 @@ class MainScreen extends StatelessWidget {
         addFavoriteUseCase: appLocator<AddFavoriteUseCase>(),
         removeFavoriteUseCase: appLocator<RemoveFavoriteUseCase>(),
         getFavoriteUseCase: appLocator<GetFavoriteUseCase>(),
+        saveRepositoriesUseCase: appLocator<SaveRepositoriesUseCase>(),
+        getRepositoriesUseCase: appLocator<GetRepositoriesUseCase>(),
       ),
       child: BlocBuilder<MainBloc, MainState>(
         builder: (BuildContext context, MainState state) {
