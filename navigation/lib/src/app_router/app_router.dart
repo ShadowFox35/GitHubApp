@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:favorite/favorite.dart';
 import 'package:main/main.dart';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,10 @@ part 'app_router.gr.dart';
       page: MainScreen,
       path: '/',
       initial: true,
+    ),
+    AutoRoute(
+      page: FavoriteScreen,
+      path: 'favorite',
     ),
   ],
 )

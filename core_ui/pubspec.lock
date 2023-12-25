@@ -152,7 +152,7 @@ packages:
     source: hosted
     version: "5.4.0"
   domain:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "../domain"
       relative: true

@@ -12,6 +12,11 @@ class SearchEvent extends MainEvent {
   SearchEvent({required this.request});
 }
 
+class AddToFavouriteEvent extends MainEvent {
+  final RepositoryEntity repository;
+  AddToFavouriteEvent({required this.repository});
+}
+
 class GoFavouriteEvent extends MainEvent {
   GoFavouriteEvent();
 }

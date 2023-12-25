@@ -24,6 +24,8 @@ mixin _$RepositoryModel {
   String? get name => throw _privateConstructorUsedError;
   @HiveField(1)
   int? get id => throw _privateConstructorUsedError;
+  @HiveField(2)
+  bool? get isFavorite => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +39,10 @@ abstract class $RepositoryModelCopyWith<$Res> {
           RepositoryModel value, $Res Function(RepositoryModel) then) =
       _$RepositoryModelCopyWithImpl<$Res, RepositoryModel>;
   @useResult
-  $Res call({@HiveField(0) String? name, @HiveField(1) int? id});
+  $Res call(
+      {@HiveField(0) String? name,
+      @HiveField(1) int? id,
+      @HiveField(2) bool? isFavorite});
 }
 
 /// @nodoc
@@ -55,6 +60,7 @@ class _$RepositoryModelCopyWithImpl<$Res, $Val extends RepositoryModel>
   $Res call({
     Object? name = freezed,
     Object? id = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -65,6 +71,10 @@ class _$RepositoryModelCopyWithImpl<$Res, $Val extends RepositoryModel>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      isFavorite: freezed == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -77,7 +87,10 @@ abstract class _$$RepositoryModelImplCopyWith<$Res>
       __$$RepositoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@HiveField(0) String? name, @HiveField(1) int? id});
+  $Res call(
+      {@HiveField(0) String? name,
+      @HiveField(1) int? id,
+      @HiveField(2) bool? isFavorite});
 }
 
 /// @nodoc
@@ -93,6 +106,7 @@ class __$$RepositoryModelImplCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? id = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_$RepositoryModelImpl(
       name: freezed == name
@@ -103,6 +117,10 @@ class __$$RepositoryModelImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      isFavorite: freezed == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -112,7 +130,9 @@ class __$$RepositoryModelImplCopyWithImpl<$Res>
 @JsonSerializable(explicitToJson: true)
 class _$RepositoryModelImpl implements _RepositoryModel {
   _$RepositoryModelImpl(
-      {@HiveField(0) this.name = '', @HiveField(1) this.id = 0});
+      {@HiveField(0) this.name = '',
+      @HiveField(1) this.id = 0,
+      @HiveField(2) this.isFavorite = false});
 
   factory _$RepositoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$RepositoryModelImplFromJson(json);
@@ -125,10 +145,14 @@ class _$RepositoryModelImpl implements _RepositoryModel {
   @JsonKey()
   @HiveField(1)
   final int? id;
+  @override
+  @JsonKey()
+  @HiveField(2)
+  final bool? isFavorite;
 
   @override
   String toString() {
-    return 'RepositoryModel(name: $name, id: $id)';
+    return 'RepositoryModel(name: $name, id: $id, isFavorite: $isFavorite)';
   }
 
   @override
@@ -137,12 +161,14 @@ class _$RepositoryModelImpl implements _RepositoryModel {
         (other.runtimeType == runtimeType &&
             other is _$RepositoryModelImpl &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id);
+  int get hashCode => Object.hash(runtimeType, name, id, isFavorite);
 
   @JsonKey(ignore: true)
   @override
@@ -162,7 +188,8 @@ class _$RepositoryModelImpl implements _RepositoryModel {
 abstract class _RepositoryModel implements RepositoryModel {
   factory _RepositoryModel(
       {@HiveField(0) final String? name,
-      @HiveField(1) final int? id}) = _$RepositoryModelImpl;
+      @HiveField(1) final int? id,
+      @HiveField(2) final bool? isFavorite}) = _$RepositoryModelImpl;
 
   factory _RepositoryModel.fromJson(Map<String, dynamic> json) =
       _$RepositoryModelImpl.fromJson;
@@ -173,6 +200,9 @@ abstract class _RepositoryModel implements RepositoryModel {
   @override
   @HiveField(1)
   int? get id;
+  @override
+  @HiveField(2)
+  bool? get isFavorite;
   @override
   @JsonKey(ignore: true)
   _$$RepositoryModelImplCopyWith<_$RepositoryModelImpl> get copyWith =>
